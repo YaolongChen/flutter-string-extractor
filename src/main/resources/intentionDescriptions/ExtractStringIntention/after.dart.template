@@ -1,0 +1,15 @@
+import 'package:flutter/material.dart';
+import 'package:my_app/l10n/S.dart'; // Assumes S class is generated here
+
+class MyWidget extends StatelessWidget {
+  final String name;
+
+  const MyWidget({super.key, required this.name});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      S.of(context).helloNameWelcomeToOurApp(name),
+    );
+  }
+}

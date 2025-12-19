@@ -1,0 +1,65 @@
+<!-- Plugin Configuration File: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <!-- Unique identifier of the plugin. It should be FQN, cannot be changed between the plugin versions. -->
+    <id>person.cyl.flutter-string-extractor</id>
+
+    <!-- Public plugin name should be written in Title Case. -->
+    <name>Flutter String Extractor</name>
+
+    <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
+    <vendor url="https://github.com/YaolongChen">YaolongChen</vendor>
+
+    <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager. -->
+    <description><![CDATA[
+        <p>A simple but powerful tool to streamline Flutter internationalization (i18n).</p>
+        <p>This plugin helps you extract hard-coded strings from your Dart code into ARB (Application Resource Bundle) files with a single action.</p>
+        <br>
+        <strong>Features:</strong>
+        <ul>
+            <li><b>Extract String Action:</b> Use a keyboard shortcut (Alt+S) or the context menu to extract a string.</li>
+            <li><b>Intention Action:</b> A quick-fix intention available directly on string literals.</li>
+            <li><b>Handles Interpolation:</b> Automatically converts Dart string interpolations (e.g., <code>"Hello, $name"</code>) into ARB-compatible placeholders (e.g., <code>"Hello, {name}"</code>).</li>
+            <li><b>Batch Updates:</b> Writes the new key-value pair to all <code>.arb</code> files found in your project's configured <code>l10n</code> directory.</li>
+            <li><b>Smart Key Suggestions:</b> Suggests a key name based on the string content.</li>
+        </ul>
+    ]]></description>
+
+    <change-notes><![CDATA[
+        <h3>1.0.0</h3>
+        <ul>
+            <li>Initial release.</li>
+            <li>Provides an Action and an Intention to extract strings to ARB files.</li>
+            <li>Supports string interpolation and batch writing to all ARB files.</li>
+        </ul>
+    ]]></change-notes>
+
+    <!-- Product and plugin compatibility requirements. -->
+    <idea-version since-build="231" until-build="241.*"/>
+
+    <!-- Plugin dependencies. -->
+    <depends>com.intellij.modules.platform</depends>
+    <depends>Dart</depends>
+
+    <!-- Resource Bundle declaration for i18n. -->
+    <resource-bundle>messages.MyMessageBundle</resource-bundle>
+
+    <!-- Declares extensions provided by the plugin. -->
+    <extensions defaultExtensionNs="com.intellij">
+        <intentionAction>
+            <className>person.cyl.flutterstringextractor.ExtractStringIntention</className>
+            <category>Flutter</category>
+        </intentionAction>
+    </extensions>
+
+    <!-- Defines actions, which are commands that can be executed by the user. -->
+    <actions>
+        <action id="ExtractToArbAction"
+                class="person.cyl.flutterstringextractor.ExtractToArbAction"
+                text="Extract String to ARB"
+                description="Extracts the selected string to ARB files for localization.">
+            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="alt S"/>
+        </action>
+    </actions>
+
+</idea-plugin>
