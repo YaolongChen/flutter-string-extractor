@@ -1,76 +1,76 @@
-# Flutter String Extractor 插件使用说明
-这是一个用于 IntelliJ IDEA / Android Studio 的 Flutter 插件，旨在帮助开发者快速将硬编码的字符串提取到 ARB 文件中，并自动替换为国际化代码调用。
+# Flutter String Extractor Plugin Usage Guide
 
-# ✨ 核心特性
+This is a Flutter plugin for IntelliJ IDEA / Android Studio designed to help developers quickly extract hard-coded strings into ARB files and automatically replace them with localization code calls.
 
-- 智能提取：支持提取普通字符串和包含插值的字符串（如 "Hello $name"）。
+# ✨ Core Features
 
-- 自动转换：自动将 Dart 插值语法（$name）转换为 ARB 占位符格式（{name}）。
+- **Smart Extraction**: Supports extracting both simple strings and strings with interpolation (e.g., `"Hello $name"`).
+- **Automatic Conversion**: Automatically converts Dart interpolation syntax (`$name`) into ARB placeholder format (`{name}`).
+- **Batch Update**: Automatically identifies and updates all `.arb` files in the specified directory (e.g., updating both `app_en.arb` and `app_zh.arb` simultaneously), saving you the trouble of manually copying keys.
+- **Highly Configurable**: Supports customizing the ARB file directory and the generated localization class name.
 
-- 批量更新：自动识别并更新指定目录下的所有 .arb 文件（如同时更新 app_en.arb 和 app_zh.arb），省去手动复制 Key 的麻烦。
+# ⚙️ Project Configuration (pubspec.yaml)
 
-- 高度可配：支持自定义 ARB 文件目录和生成的本地化类名。
+To let the plugin know where your ARB files are located and which localization class you are using (e.g., `S` or `AppLocalizations`), please add a `flutter_string_extractor` configuration section to your project's `pubspec.yaml`.
 
-# ⚙️ 项目配置 (pubspec.yaml)
+If not configured, the plugin will use the following default values:
+- Directory: `lib/l10n`
+- Class Name: `S`
 
-为了让插件知道 ARB 文件在哪里以及你使用的是哪个本地化类（如 S 或 AppLocalizations），请在项目的 pubspec.yaml 中添加 flutter_string_extractor 配置段。
+### Complete Configuration Example
 
-如果未配置，插件将使用默认值：
-
-目录：lib/l10n类名：S
-
-### 完整配置示例
-```
+```yaml
 # pubspec.yaml
 
-# ... 其他依赖 ...
+# ... other dependencies ...
 
-# 插件配置
+# Plugin Configuration
 flutter_string_extractor:
-# [可选] ARB 文件所在的目录路径 (相对于项目根目录)
-# 插件会扫描该目录下所有的 .arb 文件并同时写入
-arb_dir: lib/src/l10n
+  # [Optional] The directory path where ARB files are located (relative to the project root)
+  # The plugin will scan all .arb files in this directory and write to them simultaneously
+  arb_dir: lib/src/l10n
 
-# [可选] 生成代码时使用的类名
-# 例如设置为 AppLocalizations 后，替换代码将变为: AppLocalizations.of(context).keyName
-localizations_class_name: S
+  # [Optional] The class name used when generating code
+  # For example, if set to AppLocalizations, the replacement code will be: AppLocalizations.of(context).keyName
+  localizations_class_name: S
 ```
 
+# 🚀 How to Use
 
-# 🚀 如何使用
+The plugin provides two convenient ways to use it:
 
-插件提供了两种便捷的使用方式：
+### Method 1: Intention Action (Recommended 👍)
 
-### 方式一：Intention Action (推荐 👍)
+This is the fastest way and aligns with native IDE habits.
 
-这是最快的方式，符合 IDE 原生习惯。
-1. 将光标移动到 Dart 代码中的字符串字面量内部（例如 "Click me"）。
-2. 按下 Alt + Enter (Windows/Linux) 或 Option + Enter (macOS)。
-3. 在弹出的菜单中选择 "Extract string to ARB file"。
-4. 在弹出的对话框中输入 Key 名称（插件会自动根据字符串内容提供建议）。
-5. 回车确认，插件将自动替换代码并更新 ARB 文件。
+1. Place your cursor inside a string literal in your Dart code (e.g., `"Click me"`).
+2. Press `Alt + Enter` (Windows/Linux) or `Option + Enter` (macOS).
+3. Select **"Extract string to ARB file"** from the popup menu.
+4. Enter the Key name in the dialog box (the plugin will automatically suggest a name based on the string content).
+5. Press Enter to confirm. The plugin will automatically replace the code and update the ARB files.
 
-### 方式二：菜单 Action
+### Method 2: Menu Action
 
-1. 选中想要提取的字符串（或者直接将光标放在字符串上）。
-2. 在编辑器中右键单击，或者在顶部菜单栏查找插件提供的 Action（具体位置取决于插件配置，通常在 Refactor 菜单下）。
-3. 输入 Key 名称并确认。
+1. Select the string you want to extract (or simply place the cursor on the string).
+2. Right-click in the editor, or look for the Action provided by the plugin in the top menu bar (usually under the **Refactor** menu, or use the shortcut `Alt + S`).
+3. Enter the Key name and confirm.
 
-# 💡 功能细节
+# 💡 Feature Details
 
-1. 插值自动处理
+### 1. Automatic Interpolation Handling
 
-插件能智能处理 Dart 字符串插值。
-- 源代码: "Total cost: ${price * count}"
-- 提取后的 ARB Value: "Total cost: {priceCount}"
-- 生成的 Dart 代码: S.of(context).total_cost (假设 Key 为 total_cost)
+The plugin intelligently handles Dart string interpolation.
 
-(注意：生成的 ARB 占位符名称是基于变量名自动生成的驼峰命名)
+- **Source Code**: `"Total cost: ${price * count}"`
+- **Extracted ARB Value**: `"Total cost: {priceCount}"`
+- **Generated Dart Code**: `S.of(context).total_cost` (assuming the Key is `total_cost`)
 
-2. 多语言同步
+*(Note: The generated ARB placeholder names are camelCase names automatically generated based on the variable names)*
 
-如果你的 arb_dir 目录下存在多个文件：
-- app_en.arb
-- app_zh.arb
+### 2. Multi-language Synchronization
 
-当你提取一个字符串时，插件会同时向这两个文件写入相同的 Key 和 Value（作为待翻译的基础），确保你的翻译文件 Key 值始终保持同步，避免遗漏。
+If multiple files exist in your `arb_dir` directory:
+- `app_en.arb`
+- `app_zh.arb`
+
+When you extract a string, the plugin will write the same Key and Value to both files simultaneously (as a base for translation). This ensures that keys in your translation files are always synchronized, avoiding omissions.
