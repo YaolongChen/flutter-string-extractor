@@ -1,3 +1,5 @@
+[中文文档](README_zh.md)
+
 # Flutter String Extractor Plugin Usage Guide
 
 This is a Flutter plugin for IntelliJ IDEA / Android Studio designed to help developers quickly extract hard-coded strings into ARB files and automatically replace them with localization code calls.
