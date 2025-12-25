@@ -96,13 +96,9 @@ object ArbFormatter {
         if (cleaned.first().isDigit()) cleaned = "var$cleaned"
 
         val parts = cleaned.split('.')
-        if (parts.size == 1) return cleaned.replaceFirstChar { it.lowercase() }
-
-        // 3. 处理点号分割的链式调用，转换为驼峰命名
-        val sb = StringBuilder(parts[0].replaceFirstChar { it.lowercase() })
-        for (i in 1 until parts.size) {
-            sb.append(parts[i].replaceFirstChar { it.uppercase() })
+        if (parts.isNotEmpty()) {
+            return parts.last().replaceFirstChar { it.uppercase() }
         }
-        return sb.toString()
+        return cleaned
     }
 }
