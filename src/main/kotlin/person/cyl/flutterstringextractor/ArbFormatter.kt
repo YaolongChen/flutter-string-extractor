@@ -97,7 +97,7 @@ object ArbFormatter {
 
         val parts = cleaned.split('.')
         if (parts.isNotEmpty()) {
-            return parts.last().replaceFirstChar { it.uppercase() }
+            return parts.last().replaceFirstChar { it.lowercase() }
         }
         return cleaned
     }
