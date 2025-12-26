@@ -76,3 +76,7 @@ If multiple files exist in your `arb_dir` directory:
 - `app_zh.arb`
 
 When you extract a string, the plugin will write the same Key and Value to both files simultaneously (as a base for translation). This ensures that keys in your translation files are always synchronized, avoiding omissions.
+
+# License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

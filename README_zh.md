@@ -74,3 +74,7 @@ flutter_string_extractor:
 - `app_zh.arb`
 
 当你提取一个字符串时，插件会同时向这两个文件写入相同的 Key 和 Value（作为待翻译的基础）。这确保了你的翻译文件 Key 值始终保持同步，避免遗漏。
+
+# 许可证
+
+本项目基于 MIT 许可证开源 - 详情请参阅 [LICENSE](LICENSE) 文件。
