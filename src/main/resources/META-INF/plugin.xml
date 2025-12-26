@@ -21,7 +21,16 @@
             <li><b>Handles Interpolation:</b> Automatically converts Dart string interpolations (e.g., <code>"Hello, $name"</code>) into ARB-compatible placeholders (e.g., <code>"Hello, {name}"</code>).</li>
             <li><b>Batch Updates:</b> Writes the new key-value pair to all <code>.arb</code> files found in your project's configured <code>l10n</code> directory.</li>
             <li><b>Smart Key Suggestions:</b> Suggests a key name based on the string content.</li>
+            <li><b>Configurable:</b> Supports configuration via <code>pubspec.yaml</code> for custom ARB directory and localization class name.</li>
         </ul>
+        <br>
+        <strong>Configuration (Optional):</strong>
+        <p>Add the following to your <code>pubspec.yaml</code> to customize the plugin behavior:</p>
+        <pre>
+flutter_string_extractor:
+  arb_dir: lib/l10n
+  localizations_class_name: S
+        </pre>
     ]]></description>
 
     <change-notes><![CDATA[
@@ -30,6 +39,7 @@
             <li>Initial release.</li>
             <li>Provides an Action and an Intention to extract strings to ARB files.</li>
             <li>Supports string interpolation and batch writing to all ARB files.</li>
+            <li>Support for configuration via <code>pubspec.yaml</code>.</li>
         </ul>
     ]]></change-notes>
 
