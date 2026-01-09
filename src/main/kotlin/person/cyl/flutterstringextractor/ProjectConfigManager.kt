@@ -18,10 +18,12 @@ object ProjectConfigManager {
      * 插件配置数据类。
      * @property arbDir ARB 文件所在的目录。
      * @property className 本地化代理类名 (例如 S, AppLocalizations)。
+     * @property lookupArbFile 用于查找 Key 的首选 ARB 文件名（例如 "app_zh.arb"）。如果为空，则在所有 ARB 文件中查找。
      */
     data class PluginConfig(
         val arbDir: String = DEFAULT_ARB_DIR,
-        val className: String = DEFAULT_CLASS_NAME
+        val className: String = DEFAULT_CLASS_NAME,
+        val lookupArbFile: String? = null
     )
 
     /**
@@ -32,6 +34,23 @@ object ProjectConfigManager {
     fun getLocalizationsClassName(currentFile: PsiFile): String {
         val pubspec = findPubspecFile(currentFile) ?: return DEFAULT_CLASS_NAME
         return readConfigFromPubspec(pubspec).className
+    }
+
+    /**
+     * 获取用于查找 Key 的首选 ARB 文件。
+     * @param currentFile 当前正在编辑的文件。
+     * @return 如果配置了 lookup_arb_file 且文件存在，则返回该文件；否则返回 null。
+     */
+    fun getLookupArbFile(currentFile: PsiFile): File? {
+        val pubspecFile = findPubspecFile(currentFile) ?: return null
+        val config = readConfigFromPubspec(pubspecFile)
+        val lookupFileName = config.lookupArbFile ?: return null
+
+        val projectRoot = pubspecFile.parent
+        val l10nDir = projectRoot.findFileByRelativePath(config.arbDir) ?: return null
+        
+        val lookupFile = l10nDir.findChild(lookupFileName)
+        return if (lookupFile != null && !lookupFile.isDirectory) File(lookupFile.path) else null
     }
 
     /**
@@ -90,11 +109,12 @@ object ProjectConfigManager {
 
     /**
      * 解析 `pubspec.yaml` 文件，提取插件配置。
-     * 支持 `arb_dir` 和 `localizations_class_name`。
+     * 支持 `arb_dir`, `localizations_class_name` 和 `lookup_arb_file`。
      */
     private fun readConfigFromPubspec(pubspec: VirtualFile): PluginConfig {
         var arbDir = DEFAULT_ARB_DIR
         var className = DEFAULT_CLASS_NAME
+        var lookupArbFile: String? = null
 
         try {
             val content = String(pubspec.contentsToByteArray())
@@ -121,12 +141,15 @@ object ProjectConfigManager {
                     if (trimmed.startsWith("localizations_class_name:")) {
                         className = trimmed.substringAfter("localizations_class_name:").trim()
                     }
+                    if (trimmed.startsWith("lookup_arb_file:")) {
+                        lookupArbFile = trimmed.substringAfter("lookup_arb_file:").trim()
+                    }
                 }
             }
         } catch (e: Exception) {
             e.printStackTrace()
             // 解析失败时返回默认配置
         }
-        return PluginConfig(arbDir, className)
+        return PluginConfig(arbDir, className, lookupArbFile)
     }
 }

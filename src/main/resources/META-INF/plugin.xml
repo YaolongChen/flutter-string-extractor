@@ -16,12 +16,14 @@
         <br>
         <strong>Features:</strong>
         <ul>
-            <li><b>Extract String Action:</b> Use a keyboard shortcut (Alt+S) or the context menu to extract a string.</li>
+            <li><b>Extract String Action:</b> Use a keyboard shortcut (Alt+S) or the context menu to extract a single string.</li>
+            <li><b>Extract All Strings Action:</b> Batch extract all string literals in the current file with a review dialog.</li>
             <li><b>Intention Action:</b> A quick-fix intention available directly on string literals.</li>
             <li><b>Handles Interpolation:</b> Automatically converts Dart string interpolations (e.g., <code>"Hello, $name"</code>) into ARB-compatible placeholders (e.g., <code>"Hello, {name}"</code>).</li>
             <li><b>Batch Updates:</b> Writes the new key-value pair to all <code>.arb</code> files found in your project's configured <code>l10n</code> directory.</li>
             <li><b>Smart Key Suggestions:</b> Suggests a key name based on the string content.</li>
-            <li><b>Configurable:</b> Supports configuration via <code>pubspec.yaml</code> for custom ARB directory and localization class name.</li>
+            <li><b>Review Dialog:</b> The "Extract All Strings" dialog supports editing keys, batch updating keys for identical values, and multi-cell copy/paste.</li>
+            <li><b>Configurable:</b> Supports configuration via <code>pubspec.yaml</code> for custom ARB directory, localization class name, and preferred lookup file.</li>
         </ul>
         <br>
         <strong>Configuration (Optional):</strong>
@@ -30,6 +32,7 @@
 flutter_string_extractor:
   arb_dir: lib/l10n
   localizations_class_name: S
+  lookup_arb_file: app_zh.arb # Optional: Specify a file to lookup existing keys
         </pre>
     ]]></description>
 
@@ -39,7 +42,29 @@ flutter_string_extractor:
             <li>Initial release.</li>
             <li>Provides an Action and an Intention to extract strings to ARB files.</li>
             <li>Supports string interpolation and batch writing to all ARB files.</li>
-            <li>Support for configuration via <code>pubspec.yaml</code>.</li>
+        </ul>
+        <h3>1.1.0</h3>
+        <ul>
+            <li><b>New Feature:</b> Added "Extract All Strings" action to batch extract all string literals from the current file.</li>
+            <li><b>Interactive Dialog:</b>
+                <ul>
+                    <li>Edit keys directly in a table view.</li>
+                    <li>Batch update keys for identical string values.</li>
+                    <li>Support for multi-cell copy and paste.</li>
+                    <li>Double-click original text to navigate to source code.</li>
+                    <li>Exclude strings by deleting rows or clearing keys.</li>
+                </ul>
+            </li>
+            <li><b>Configuration:</b> Added <code>lookup_arb_file</code> option in <code>pubspec.yaml</code> to prioritize a specific ARB file for key lookup.</li>
+            <li><b>Performance:</b> Optimized ARB file reading using streams.</li>
+            <li><b>Improvements:</b>
+                <ul>
+                    <li>Prevent overwriting existing keys during batch extraction.</li>
+                    <li>Improved UX for "Extract String" intention dialog.</li>
+                    <li>Fixed file cache conflict issues by using Document API.</li>
+                    <li>Support Undo (Ctrl+Z) for file modifications.</li>
+                </ul>
+            </li>
         </ul>
     ]]></change-notes>
 
@@ -67,8 +92,14 @@ flutter_string_extractor:
                 class="person.cyl.flutterstringextractor.ExtractToArbAction"
                 text="Extract String to ARB"
                 description="Extracts the selected string to ARB files for localization.">
-            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+            <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="ExtractAllStringsAction"/>
             <keyboard-shortcut keymap="$default" first-keystroke="alt S"/>
+        </action>
+        <action id="ExtractAllStringsAction"
+                class="person.cyl.flutterstringextractor.ExtractAllStringsAction"
+                text="Extract All Strings to ARB"
+                description="Extracts all strings in the current file to ARB files.">
+            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
         </action>
     </actions>
 
