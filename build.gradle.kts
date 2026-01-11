@@ -4,8 +4,10 @@ plugins {
     id("org.jetbrains.intellij.platform") version "2.10.2"
 }
 
+val pluginVersion = "1.1.0"
+
 group = "person.cyl"
-version = "1.1.0"
+version = pluginVersion
 
 repositories {
     mavenCentral()
@@ -49,6 +51,9 @@ tasks {
     withType<JavaCompile> {
         sourceCompatibility = "21"
         targetCompatibility = "21"
+    }
+    patchPluginXml {
+        enabled = false
     }
 }
 
