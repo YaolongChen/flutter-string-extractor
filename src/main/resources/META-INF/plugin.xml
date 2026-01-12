@@ -3,6 +3,8 @@
     <!-- Unique identifier of the plugin. It should be FQN, cannot be changed between the plugin versions. -->
     <id>person.cyl.flutter-string-extractor</id>
 
+    <version>1.1.1</version>
+
     <!-- Public plugin name should be written in Title Case. -->
     <name>Flutter String Extractor</name>
 
@@ -42,6 +44,9 @@ flutter_string_extractor:
             <li>Compatible with more versions</li>
         </ul>
     ]]></change-notes>
+
+    <!-- Product and plugin compatibility requirements. -->
+    <idea-version since-build="221.1"/>
 
     <!-- Plugin dependencies. -->
     <depends>com.intellij.modules.platform</depends>
