@@ -37,39 +37,11 @@ flutter_string_extractor:
     ]]></description>
 
     <change-notes><![CDATA[
-        <h3>1.0.0</h3>
+        <h3>1.1.1</h3>
         <ul>
-            <li>Initial release.</li>
-            <li>Provides an Action and an Intention to extract strings to ARB files.</li>
-            <li>Supports string interpolation and batch writing to all ARB files.</li>
-        </ul>
-        <h3>1.1.0</h3>
-        <ul>
-            <li><b>New Feature:</b> Added "Extract All Strings" action to batch extract all string literals from the current file.</li>
-            <li><b>Interactive Dialog:</b>
-                <ul>
-                    <li>Edit keys directly in a table view.</li>
-                    <li>Batch update keys for identical string values.</li>
-                    <li>Support for multi-cell copy and paste.</li>
-                    <li>Double-click original text to navigate to source code.</li>
-                    <li>Exclude strings by deleting rows or clearing keys.</li>
-                </ul>
-            </li>
-            <li><b>Configuration:</b> Added <code>lookup_arb_file</code> option in <code>pubspec.yaml</code> to prioritize a specific ARB file for key lookup.</li>
-            <li><b>Performance:</b> Optimized ARB file reading using streams.</li>
-            <li><b>Improvements:</b>
-                <ul>
-                    <li>Prevent overwriting existing keys during batch extraction.</li>
-                    <li>Improved UX for "Extract String" intention dialog.</li>
-                    <li>Fixed file cache conflict issues by using Document API.</li>
-                    <li>Support Undo (Ctrl+Z) for file modifications.</li>
-                </ul>
-            </li>
+            <li>Compatible with more versions</li>
         </ul>
     ]]></change-notes>
-
-    <!-- Product and plugin compatibility requirements. -->
-    <idea-version since-build="231" until-build="241.*"/>
 
     <!-- Plugin dependencies. -->
     <depends>com.intellij.modules.platform</depends>

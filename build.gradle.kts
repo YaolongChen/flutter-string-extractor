@@ -4,7 +4,7 @@ plugins {
     id("org.jetbrains.intellij.platform") version "2.10.2"
 }
 
-val pluginVersion = "1.1.0"
+val pluginVersion = "1.1.1"
 
 group = "person.cyl"
 version = pluginVersion
@@ -32,12 +32,8 @@ dependencies {
 intellijPlatform {
     pluginConfiguration {
         ideaVersion {
-            sinceBuild = "252.25557"
+            sinceBuild = "221.1"
         }
-
-        changeNotes = """
-            Initial version
-        """.trimIndent()
     }
     pluginVerification {
         ides {
