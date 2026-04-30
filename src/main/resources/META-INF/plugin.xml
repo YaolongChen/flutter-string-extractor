@@ -3,7 +3,7 @@
     <!-- Unique identifier of the plugin. It should be FQN, cannot be changed between the plugin versions. -->
     <id>person.cyl.flutter-string-extractor</id>
 
-    <version>1.1.1</version>
+    <version>2.0.0</version>
 
     <!-- Public plugin name should be written in Title Case. -->
     <name>Flutter String Extractor</name>
@@ -61,6 +61,15 @@ flutter_string_extractor:
             <className>person.cyl.flutterstringextractor.ExtractStringIntention</className>
             <category>Flutter</category>
         </intentionAction>
+
+        <applicationService serviceImplementation="person.cyl.flutterstringextractor.model.ExtractSettingState"/>
+
+        <applicationConfigurable
+                parentId="tools"
+                instance="person.cyl.flutterstringextractor.controller.ExtractSettingConfigurable"
+                id="person.cyl.flutterstringextractor.ExtractSettingConfigurable"
+                displayName="FlutterStringExtractor"
+        />
     </extensions>
 
     <!-- Defines actions, which are commands that can be executed by the user. -->

@@ -1,4 +1,4 @@
-package person.cyl.flutterstringextractor
+package person.cyl.flutterstringextractor.view
 
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
@@ -9,11 +9,17 @@ import com.intellij.openapi.ui.Messages
 import com.intellij.ui.ToolbarDecorator
 import com.intellij.ui.table.JBTable
 import com.jetbrains.lang.dart.psi.DartStringLiteralExpression
+import person.cyl.flutterstringextractor.MyMessageBundle
 import java.awt.BorderLayout
 import java.awt.Dimension
+import java.awt.Toolkit
+import java.awt.datatransfer.DataFlavor
+import java.awt.datatransfer.StringSelection
+import java.awt.event.ActionEvent
 import java.awt.event.KeyEvent
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
+import javax.swing.AbstractAction
 import javax.swing.JCheckBox
 import javax.swing.JComponent
 import javax.swing.JPanel
@@ -49,10 +55,10 @@ class ExtractAllStringsDialog(
 
         // Copy Action
         table.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(
-            KeyStroke.getKeyStroke(KeyEvent.VK_C, java.awt.Toolkit.getDefaultToolkit().menuShortcutKeyMaskEx), "copy"
+            KeyStroke.getKeyStroke(KeyEvent.VK_C, Toolkit.getDefaultToolkit().menuShortcutKeyMaskEx), "copy"
         )
-        table.actionMap.put("copy", object : javax.swing.AbstractAction() {
-            override fun actionPerformed(e: java.awt.event.ActionEvent?) {
+        table.actionMap.put("copy", object : AbstractAction() {
+            override fun actionPerformed(e: ActionEvent?) {
                 val sbf = StringBuilder()
                 val selectedRows = table.selectedRows
                 val selectedCols = table.selectedColumns
@@ -66,20 +72,20 @@ class ExtractAllStringsDialog(
                     if (i < selectedRows.size - 1) sbf.append("\n")
                 }
 
-                val selection = java.awt.datatransfer.StringSelection(sbf.toString())
-                java.awt.Toolkit.getDefaultToolkit().systemClipboard.setContents(selection, selection)
+                val selection = StringSelection(sbf.toString())
+                Toolkit.getDefaultToolkit().systemClipboard.setContents(selection, selection)
             }
         })
 
         // Paste Action
         table.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(
-            KeyStroke.getKeyStroke(KeyEvent.VK_V, java.awt.Toolkit.getDefaultToolkit().menuShortcutKeyMaskEx), "paste"
+            KeyStroke.getKeyStroke(KeyEvent.VK_V, Toolkit.getDefaultToolkit().menuShortcutKeyMaskEx), "paste"
         )
-        table.actionMap.put("paste", object : javax.swing.AbstractAction() {
-            override fun actionPerformed(e: java.awt.event.ActionEvent?) {
-                val clipboard = java.awt.Toolkit.getDefaultToolkit().systemClipboard
+        table.actionMap.put("paste", object : AbstractAction() {
+            override fun actionPerformed(e: ActionEvent?) {
+                val clipboard = Toolkit.getDefaultToolkit().systemClipboard
                 val content = try {
-                    clipboard.getData(java.awt.datatransfer.DataFlavor.stringFlavor) as? String
+                    clipboard.getData(DataFlavor.stringFlavor) as? String
                 } catch (ex: Exception) {
                     null
                 } ?: return

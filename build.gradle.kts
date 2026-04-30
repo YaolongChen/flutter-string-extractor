@@ -4,7 +4,7 @@ plugins {
     id("org.jetbrains.intellij.platform") version "2.10.2"
 }
 
-val pluginVersion = "1.1.1"
+val pluginVersion = "2.0.0"
 
 group = "person.cyl"
 version = pluginVersion
@@ -24,7 +24,7 @@ dependencies {
         local(file("D:\\Android\\Studio"))
         testFramework(org.jetbrains.intellij.platform.gradle.TestFrameworkType.Platform)
 
-        plugin("Dart", "500.0.0")
+        plugin("Dart", "504.0.0")
     }
 
 }
